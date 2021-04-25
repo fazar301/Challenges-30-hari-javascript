@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Type Ahead 👀</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <form class="search-form">
+    <input type="text" class="search" placeholder="City or State">
+    <ul class="suggestions">
+      <li>Filter for a city</li>
+      <li>or a state</li>
+    </ul>
+  </form>
+<script>
+  const keyword = document.querySelector('input')
+  keyword.addEventListener('input',function(){
+    fetch('https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json')
+      .then(reponse => reponse.json())
+      .then(data => {
+        let liStr = '';
+        const hasil = data.filter(element => element.city.toLowerCase().includes(`${keyword.value}`) || element.state.toLowerCase().includes(`${keyword.value}`))
+        
+        const con = document.querySelector('.suggestions')
+        hasil.forEach(element => {
+          liStr += `<li><span class="name">${element.city.toLowerCase().includes(keyword.value.toLowerCase()) ? element.city.toLowerCase().replace(keyword.value.toLowerCase(),`<span class="hl">${keyword.value}</span>`) : element.city}, ${element.state.toLowerCase().includes(keyword.value.toLowerCase()) ? element.state.toLowerCase().replace(keyword.value.toLowerCase(),`<span class="hl">${keyword.value}</span>`) : element.state}</span><span class="population">${element.population.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>`
+        })
+        con.innerHTML = liStr
+      })
+
+  })
+const endpoint = 'https://gist.githubusercontent.com/Miserlou/c5cd8364bf9b2420bb29/raw/2bf258763cdddd704f8ffd3ea9a3e81d25e2c6f6/cities.json';
+
+</script>
+</body>
+</html>

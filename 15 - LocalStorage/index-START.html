@@ -32,7 +32,7 @@
   const items = JSON.parse(localStorage.getItem('items')) || [];
   itemsList.addEventListener('click', toggleDone)
   addItems.addEventListener('submit', addItem)
-  populateList(items, itemsList)
+  populateList(items, itemsList) 
   function addItem(e){
     e.preventDefault()
     const text = input.value

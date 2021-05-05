@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Video Speed Scrubber</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="wrapper">
+    <video class="flex" width="765" height="430" src="http://clips.vorwaerts-gmbh.de/VfE_html5.mp4" loop controls></video>
+    <div class="speed">
+      <div class="speed-bar">1×</div>
+    </div>
+  </div>
+
+<script>
+  const video = document.querySelector('video')
+
+  const speed = document.querySelector('.speed')
+  const speedBar = document.querySelector('.speed-bar')
+
+  speed.addEventListener('mousemove',function(e){
+    // if(e.target !== e.currentTarget) return; 
+
+    // bro kok lu make e.currentTarget bukan e.target aj
+    // ini penjelasannya itu karena e.currentTarget akan selalu mengacu pada parent
+    // soalnya e.target itu akan mengacu pada apapun yang ada didalam parentnya atau parent itu sendiri
+    // tapi kan lo bisa ngereturn kalo yang di target itu anaknya 
+    // kalo direturn event nya gak jalan dong
+
+    const value = ((e.clientY - e.currentTarget.getBoundingClientRect().top) / e.currentTarget.offsetHeight) * 4
+    const height = Math.floor(((e.clientY - e.currentTarget.getBoundingClientRect().top) / e.currentTarget.offsetHeight) * 100)
+
+    video.playbackRate = value
+
+    speedBar.style.height = height + '%'
+    // to fixed 2 akan selalu mengambil dua angka setelah desimal
+    speedBar.innerHTML = value.toFixed(2) + 'x'
+
+  })
+</script>
+</body>
+</html>
